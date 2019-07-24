@@ -1,12 +1,12 @@
-import { VoluntariosService } from './../shared/voluntarios-service.service';
+import { MonitoresService } from './../shared/monitores-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-voluntarios-list',
-  templateUrl: './voluntarios-list.component.html',
-  styleUrls: ['./voluntarios-list.component.css']
+  selector: 'app-monitores-list',
+  templateUrl: './monitores-list.component.html',
+  styleUrls: ['./monitores-list.component.css']
 })
-export class VoluntariosListComponent implements OnInit {
+export class MonitoresListComponent implements OnInit {
 
   page = 0;
   count = 5;
@@ -15,24 +15,24 @@ export class VoluntariosListComponent implements OnInit {
   rows: number;
   pageIndex: number;
 
-  voluntarios = new Array();
+  monitores = new Array();
   selectedFile: File;
 
-  constructor(private voluntarioService: VoluntariosService) { }
+  constructor(private monitorService: MonitoresService) { }
 
   ngOnInit() {
 
   }
 
-  loadVoluntariosLazy(event) {
+  loadMonitoresLazy(event) {
     this.pageIndex = event.first / event.rows;
     this.getAll(this.pageIndex, this.count);
   }
 
   getAll(pageIndex, count) {
-    this.voluntarioService.findAll(pageIndex, count).subscribe(
+    this.monitorService.findAll(pageIndex, count).subscribe(
       pages => {
-        this.voluntarios = pages.content;
+        this.monitores = pages.content;
         this.totalRecords = pages.totalElements;
       },
       err => console.log(err));
@@ -40,7 +40,7 @@ export class VoluntariosListComponent implements OnInit {
 
   onBasicUpload(event) {
     this.selectedFile = event.files[0];
-    this.voluntarioService.importData(this.selectedFile).subscribe(
+    this.monitorService.importData(this.selectedFile).subscribe(
       res => {
         this.getAll(0, 5);
       },

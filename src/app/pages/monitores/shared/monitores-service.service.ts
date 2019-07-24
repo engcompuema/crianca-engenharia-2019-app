@@ -1,4 +1,5 @@
-import { Voluntario } from './voluntario.model';
+import { Monitor } from './monitor.model';
+
 
 import { Injectable, Injector } from '@angular/core';
 import { BaseResourceService } from 'src/app/shared/services/base-resource-service.service';
@@ -8,10 +9,10 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class VoluntariosService extends BaseResourceService<Voluntario> {
+export class MonitoresService extends BaseResourceService<Monitor> {
 
   constructor(protected injector: Injector) {
-    super('voluntario', injector);
+    super('monitor', injector);
   }
 
   importData(file: File) {

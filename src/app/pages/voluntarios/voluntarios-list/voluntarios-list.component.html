@@ -1,24 +1,24 @@
 <app-bread-crumb [items]="[{text: 'Voluntários'}]"></app-bread-crumb>
 
-<p-table [lazy]="true" (onLazyLoad)="loadVoluntariosLazy($event)" [totalRecords]="totalRecords" class="table stripped-table mb-2" [value]="voluntarios" [paginator]="true" [rows]="5">
+<p-table [lazy]="true" (onLazyLoad)="loadVoluntariosLazy($event)" [totalRecords]="totalRecords"
+  class="table stripped-table mb-2" [value]="voluntarios" [paginator]="true" [rows]="5">
   <ng-template pTemplate="header" let-columns>
     <tr class="d-flex" style="text-align: center">
       <th class="col-md-4">Nome</th>
-      <th class="col-md-2">CPF</th>
-      <th class="col-md-2">Tipo Apresentação</th>
-      <th class="col-md-1">Check-in</th>
+      <th class="col-md-3">CPF</th>
+      <th class="col-md-2">Check-in</th>
       <th class="col-md-3">E-mail</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-voluntario>
     <tr class="d-flex">
       <td class="col-md-4">{{voluntario.nome}}</td>
-      <td class="col-md-2">{{voluntario.cpf}}</td>
-      <td class="col-md-2">{{voluntario.tipoApresentacao}}</td>
-      <td class="col-md-1"></td>
+      <td class="col-md-3">{{voluntario.cpf}}</td>
+      <td class="col-md-2">{{voluntario.checkin}}</td>
       <td class="col-md-3">{{voluntario.email}}</td>
     </tr>
   </ng-template>
 </p-table>
-<br/>
-<p-fileUpload [auto]="true" mode="basic" name="demo[]" accept=".xlsx*" maxFileSize="1000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
+<br />
+<p-fileUpload [auto]="true" chooseLabel="Selecionar Arquivo"  mode="basic" name="demo[]" accept=".xls*" maxFileSize="1000000"
+  (onSelect)="onBasicUpload($event)"></p-fileUpload>
