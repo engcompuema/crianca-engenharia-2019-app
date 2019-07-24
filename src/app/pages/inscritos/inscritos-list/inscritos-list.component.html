@@ -1,0 +1,26 @@
+<app-bread-crumb [items]="[{text: 'Inscritos'}]"></app-bread-crumb>
+
+<p-table [lazy]="true" (onLazyLoad)="loadVoluntariosLazy($event)" [totalRecords]="totalRecords"
+  class="table stripped-table mb-2" [value]="inscritos" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header" let-columns>
+    <tr class="d-flex" style="text-align: center">
+      <th class="col-md-3">Nome</th>
+      <th class="col-md-2">CPF</th>
+      <th class="col-md-3">E-mail</th>
+      <th class="col-md-2">Função</th>
+      <th class="col-md-2">Tipo de Atividade</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-inscrito>
+    <tr class="d-flex">
+      <td class="col-md-3">{{inscrito.nome}}</td>
+      <td class="col-md-2">{{inscrito.cpf}}</td>
+      <td class="col-md-3">{{inscrito.email}}</td>
+      <td class="col-md-2">{{inscrito.funcao}}</td>
+      <td class="col-md-2">{{inscrito.tipoAtividade}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+<br />
+<p-fileUpload [auto]="true" chooseLabel="Selecionar Arquivo"  mode="basic" name="demo[]" accept=".xls*" maxFileSize="1000000"
+  (onSelect)="onBasicUpload($event)"></p-fileUpload>

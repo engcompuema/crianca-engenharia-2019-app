@@ -1,14 +1,14 @@
+import { InscritosListComponent } from './inscritos-list/inscritos-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { VoluntariosListComponent } from './voluntarios-list/voluntarios-list.component';
 
 
 const routes: Routes = [
-  {path: '', component: VoluntariosListComponent}
+  {path: '', component: InscritosListComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class VoluntariosRoutingModule { }
+export class InscritosRoutingModule { }

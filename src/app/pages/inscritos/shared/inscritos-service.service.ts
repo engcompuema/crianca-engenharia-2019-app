@@ -1,5 +1,4 @@
-import { Monitor } from './monitor.model';
-
+import {  Inscritos } from './inscritos.model';
 
 import { Injectable, Injector } from '@angular/core';
 import { BaseResourceService } from 'src/app/shared/services/base-resource-service.service';
@@ -9,16 +8,15 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class MonitoresService extends BaseResourceService<Monitor> {
+export class InscritosService extends BaseResourceService<Inscritos> {
 
   constructor(protected injector: Injector) {
-    super('monitor', injector);
+    super('inscritos', injector);
   }
 
   importData(file: File) {
     const formData: FormData = new FormData();
     formData.append('file', file);
-    console.log(file);
     return this.http.post(`${this.configService.getApiUrl()}${this.apiPath}`, formData).pipe(
         map(this.jsonDataToResource.bind(this)),
         catchError(this.handleError)
