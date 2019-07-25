@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { InscritosService } from '../../inscritos/shared/inscritos-service.service';
-import { MessageService } from 'primeng/primeng';
+import { MessageService, ConfirmationService } from 'primeng/primeng';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-enviar',
@@ -19,7 +21,10 @@ export class EnviarComponent implements OnInit {
   selectedFile: File;
 
   constructor(private inscritosService: InscritosService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService,
+              private spinner: NgxSpinnerService,
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
 
@@ -39,19 +44,37 @@ export class EnviarComponent implements OnInit {
       err => console.log(err));
   }
 
-  onBasicUpload(event) {
-    this.selectedFile = event.files[0];
-    this.inscritosService.importData(this.selectedFile).subscribe(
-      res => {
-        this.getAll(0, 10);
-        this.messageService.add(
-          { severity: 'success', summary: 'Importação de Inscritos', detail: 'Importação Realizada Com Sucesso!' }
-        );
-      },
-      err => console.log(err));
-  }
 
   booleanToText(value: boolean): string {
     return value ? 'Sim' : 'Não';
+  }
+
+  confirmarEnvio(id: number) {
+    this.confirmationService.confirm({
+      message: 'Deseja realmente enviar o e-mail?',
+      header: 'Atenção',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // Remove o fluxo de trabalho
+        this.enviar(id);
+      }
+    });
+  }
+
+  enviar(id: number) {
+    this.spinner.show();
+    this.inscritosService.sendConfirmacao(id).subscribe(response => {
+      this.messageService.add(
+        { severity: 'success', summary: 'Envio de Confirmação', detail: response + 'Confirmação Enviada Com Sucesso!' }
+      );
+      this.spinner.hide();
+      this.getAll(0, 10);
+    },
+      err => {
+        this.messageService.add(
+          { severity: 'error', summary: 'Envio de Confirmação', detail: err + 'Erro ao Enviar a Confirmação' }
+        );
+      }
+    );
   }
 }

@@ -17,11 +17,9 @@
       <td class="col-md-2">{{inscrito.cpf}}</td>
       <td class="col-md-3">{{inscrito.email}}</td>
       <td class="col-md-2">{{booleanToText(inscrito.emailEnviado)}}</td>
-      <td class="col-md-2"><button type="button" class="btn btn-primary btn-sm" onclick="enviar(inscrito.id)"><i class="pi pi-envelope"></i>
+      <td class="col-md-2"><button type="button" class="btn btn-primary btn-sm" (click)="confirmarEnvio(inscrito.id)"><i class="pi pi-envelope"></i>
         </button></td>
     </tr>
   </ng-template>
 </p-table>
 <br />
-<p-fileUpload [auto]="true" chooseLabel="Selecionar Arquivo" mode="basic" name="demo[]" accept=".xls*"
-  maxFileSize="1000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>

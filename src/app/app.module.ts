@@ -7,6 +7,9 @@ import { ConfirmDialogModule, GrowlModule, ConfirmationService, MessageService }
 import { TableModule } from 'primeng/table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +24,8 @@ import { AppComponent } from './app.component';
     RouterModule,
     GrowlModule,
     ConfirmDialogModule,
+    NgxSpinnerModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]

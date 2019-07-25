@@ -22,6 +22,13 @@ export class InscritosService extends BaseResourceService<Inscritos> {
         catchError(this.handleError)
       );
   }
+
+  sendConfirmacao(id) {
+    return this.http.post(`${this.configService.getApiUrl()}${this.apiPath}/${id}/sendConfirmacao`, id).pipe(
+      map(this.jsonDataToResource.bind(this)),
+      catchError(this.handleError)
+    );
+  }
 }
 
 
