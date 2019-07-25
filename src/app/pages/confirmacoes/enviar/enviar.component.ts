@@ -1,14 +1,13 @@
-import { InscritosService } from '../shared/inscritos-service.service';
 import { Component, OnInit } from '@angular/core';
+import { InscritosService } from '../../inscritos/shared/inscritos-service.service';
 import { MessageService } from 'primeng/primeng';
 
 @Component({
-  selector: 'app-inscritos-list',
-  templateUrl: './inscritos-list.component.html',
-  styleUrls: ['./inscritos-list.component.css']
+  selector: 'app-enviar',
+  templateUrl: './enviar.component.html',
+  styleUrls: ['./enviar.component.css']
 })
-export class InscritosListComponent implements OnInit {
-
+export class EnviarComponent implements OnInit {
   page = 0;
   count = 10;
   totalRecords: number;
@@ -50,5 +49,9 @@ export class InscritosListComponent implements OnInit {
         );
       },
       err => console.log(err));
+  }
+
+  booleanToText(value: boolean): string {
+    return value ? 'Sim' : 'Não';
   }
 }
