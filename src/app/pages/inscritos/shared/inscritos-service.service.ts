@@ -9,6 +9,8 @@ import { map, catchError } from 'rxjs/operators';
 })
 
 export class InscritosService extends BaseResourceService<Inscritos> {
+ 
+  
 
   constructor(protected injector: Injector) {
     super('inscritos', injector);
@@ -27,6 +29,28 @@ export class InscritosService extends BaseResourceService<Inscritos> {
     return this.http.post(`${this.configService.getApiUrl()}${this.apiPath}/${id}/sendConfirmacao`, id).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError)
+    );
+  }
+
+  doCheckin(inscrito: Inscritos) {
+    return this.http.post(`${this.configService.getApiUrl()}${this.apiPath}/${inscrito.id}/checkin`, inscrito.id).pipe(
+      map(this.jsonDataToResource.bind(this)),
+      catchError(this.handleError)
+    );
+  }
+
+  findByCpf(cpf: any) {
+    return this.http.get(`${this.configService.getApiUrl()}${this.apiPath}/${cpf}/buscar`).pipe(
+      map(this.jsonDataToResource.bind(this)),
+      catchError(this.handleError)
+    );
+  }
+
+  findAllPresentes(pageIndex: any, count: any) {
+    const url = `${this.configService.getApiUrl()}${this.apiPath}/presentes/${pageIndex}/${count}`;
+    return this.http.get(url).pipe(
+      catchError(this.handleError),
+      map(this.jsonDataPagesToResources)
     );
   }
 }

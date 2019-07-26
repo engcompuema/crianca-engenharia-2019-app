@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     GrowlModule,
     ConfirmDialogModule,
     NgxSpinnerModule,
+    ProgressBarModule,
     Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [ConfirmationService, MessageService],

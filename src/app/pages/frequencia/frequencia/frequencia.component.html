@@ -1,0 +1,62 @@
+<app-bread-crumb [items]="[{text: 'Frequência'}]"></app-bread-crumb>
+
+
+<form (keydown.enter)="$event.preventDefault()" class="mb-5" [formGroup]="frequenciaForm">
+    <div class="card">
+        <div class="card-header">
+            Frequência
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>CPF</label>
+                    <input class="form-control" type="text" formControlName="cpf" (keydown.enter)="buscarCPF($event)">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Nome</label>
+                    <input class="form-control" type="text" formControlName="nome">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Email</label>
+                    <input class="form-control" type="text" formControlName="email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Função</label>
+                    <input class="form-control" type="text" formControlName="funcao">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Tipo de Atividade</label>
+                    <input class="form-control" type="text" formControlName="tipoAtividade">
+                </div>
+            </div>
+        </div>
+    </div>
+    <button (click)="confirmarCheckin()" class="btn btn-lg btn-outline-success mt-2 float-right">Checkin</button>
+</form>
+
+<br />
+<p-table [lazy]="true" (onLazyLoad)="loadInscritosLazy($event)" [totalRecords]="totalRecords"
+    class="table stripped-table mb-2 mt-5" [value]="inscritos" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header" let-columns>
+        <tr class="d-flex" style="text-align: center">
+            <th class="col-md-4">Nome</th>
+            <th class="col-md-2">CPF</th>
+            <th class="col-md-2">Função</th>
+            <th class="col-md-2">Tipo de Atividade</th>
+            <th class="col-md-2">Horário Checkin</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-inscrito>
+        <tr class="d-flex">
+            <td class="col-md-4">{{inscrito.nome}}</td>
+            <td class="col-md-2">{{inscrito.cpf}}</td>
+            <td class="col-md-2">{{inscrito.funcao}}</td>
+            <td class="col-md-2">{{inscrito.tipoAtividade}}</td>
+            <td class="col-md-2">{{inscrito.checkin | date: 'HH:mm'}}</td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -3,6 +3,7 @@ import { InscritosService } from '../../inscritos/shared/inscritos-service.servi
 import { MessageService, ConfirmationService } from 'primeng/primeng';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Inscritos } from '../../inscritos/shared/inscritos.model';
 
 @Component({
   selector: 'app-enviar',
@@ -17,7 +18,7 @@ export class EnviarComponent implements OnInit {
   rows: number;
   pageIndex: number;
 
-  inscritos = new Array();
+  inscritos : Inscritos[] = new Array();
   selectedFile: File;
 
   constructor(private inscritosService: InscritosService,
@@ -63,16 +64,17 @@ export class EnviarComponent implements OnInit {
 
   enviar(id: number) {
     this.spinner.show();
-    this.inscritosService.sendConfirmacao(id).subscribe(response => {
+    this.inscritosService.sendConfirmacao(id).subscribe(() => {
       this.messageService.add(
-        { severity: 'success', summary: 'Envio de Confirmação', detail: response + 'Confirmação Enviada Com Sucesso!' }
+        { severity: 'success', summary: 'Envio de Confirmação', detail: 'Confirmação Enviada Com Sucesso!' }
       );
       this.spinner.hide();
       this.getAll(0, 10);
     },
-      err => {
+      () => {
+        this.spinner.hide();
         this.messageService.add(
-          { severity: 'error', summary: 'Envio de Confirmação', detail: err + 'Erro ao Enviar a Confirmação' }
+          { severity: 'error', summary: 'Envio de Confirmação', detail: 'Erro ao Enviar a Confirmação' }
         );
       }
     );
