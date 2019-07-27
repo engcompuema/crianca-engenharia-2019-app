@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { InscritosService } from '../../inscritos/shared/inscritos-service.service';
 import { MessageService, ConfirmationService } from 'primeng/primeng';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Inscritos } from '../../inscritos/shared/inscritos.model';
 
 @Component({
@@ -17,18 +16,26 @@ export class EnviarComponent implements OnInit {
   cols: any[];
   rows: number;
   pageIndex: number;
+  filters = new Map();
+  emailEnviado = [
+    { label: 'Selecione', value: '' },
+    { label: 'Enviado', value: 'true' },
+    { label: 'Não Enviado', value: 'false' }
+  ];
 
-  inscritos : Inscritos[] = new Array();
+  enviandoEmails = false;
+  progressoEnvio = 0;
+
+  inscritos: Inscritos[] = new Array();
   selectedFile: File;
 
   constructor(private inscritosService: InscritosService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService,
-              private spinnerService: Ng4LoadingSpinnerService) { }
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-
+    this.filters.set('emailEnviado', { filtro: '', type: 'input' });
   }
 
   loadInscritosLazy(event) {
@@ -43,6 +50,14 @@ export class EnviarComponent implements OnInit {
         this.totalRecords = pages.totalElements;
       },
       err => console.log(err));
+  }
+
+
+  filtrar() {
+    this.inscritosService.getByParameters(0, this.count, this.filters.get('emailEnviado').filtro).subscribe((pages) => {
+      this.inscritos = pages.content;
+      this.totalRecords = pages.totalElements;
+    });
   }
 
 
@@ -69,14 +84,74 @@ export class EnviarComponent implements OnInit {
         { severity: 'success', summary: 'Envio de Confirmação', detail: 'Confirmação Enviada Com Sucesso!' }
       );
       this.spinner.hide();
-      this.getAll(0, 10);
+      this.filtrar();
     },
       () => {
         this.spinner.hide();
+        this.filtrar();
         this.messageService.add(
           { severity: 'error', summary: 'Envio de Confirmação', detail: 'Erro ao Enviar a Confirmação' }
         );
       }
     );
+  }
+
+  confirmarEnvioMassa() {
+    this.confirmationService.confirm({
+      message: 'Deseja realmente enviar os e-mails?',
+      header: 'Atenção',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.enviarMassa();
+      }
+    });
+  }
+
+  enviarMassa() {
+    this.spinner.show();
+    this.enviandoEmails = true;
+    let lista = new Array();
+    let sizeLista;
+    let lidos = 0;
+    this.inscritosService.getByParameters(0, this.count, false).subscribe(
+      res => {
+        lista = res.content;
+        sizeLista = lista.length;
+        console.log(sizeLista);
+        const step = 100 / sizeLista;
+        lista.forEach((element: Inscritos) => {
+          this.inscritosService.sendConfirmacao(element.id).subscribe(
+            () => {
+              this.progressoEnvio = this.progressoEnvio + step;
+              lidos++;
+              console.log(lidos);
+              if (lidos === sizeLista) {
+                this.progressoEnvio = 0;
+                this.filtrar();
+                this.spinner.hide();
+                this.enviandoEmails = false;
+                this.messageService.add(
+                  { severity: 'success', summary: 'Envio de Confirmação', detail: 'Confirmações Enviadas Com Sucesso!' }
+                );
+              }
+            },
+            (err) => {
+              console.log(err);
+              this.progressoEnvio = this.progressoEnvio + step;
+              lidos++;
+              console.log(lidos);
+              if (lidos === sizeLista) {
+                this.filtrar();
+                this.progressoEnvio = 0;
+                this.spinner.hide();
+                this.enviandoEmails = false;
+                this.messageService.add(
+                  { severity: 'success', summary: 'Envio de Confirmação', detail: 'Confirmações Enviadas Com Sucesso!' }
+                );
+              }
+            }
+          );
+        });
+      });
   }
 }

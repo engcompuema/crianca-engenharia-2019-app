@@ -1,16 +1,16 @@
-import {  Inscritos } from './inscritos.model';
+import { Inscritos } from './inscritos.model';
 
 import { Injectable, Injector } from '@angular/core';
 import { BaseResourceService } from 'src/app/shared/services/base-resource-service.service';
 import { map, catchError } from 'rxjs/operators';
+import { Page } from 'src/app/shared/models/page';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class InscritosService extends BaseResourceService<Inscritos> {
- 
-  
 
   constructor(protected injector: Injector) {
     super('inscritos', injector);
@@ -20,9 +20,9 @@ export class InscritosService extends BaseResourceService<Inscritos> {
     const formData: FormData = new FormData();
     formData.append('file', file);
     return this.http.post(`${this.configService.getApiUrl()}${this.apiPath}`, formData).pipe(
-        map(this.jsonDataToResource.bind(this)),
-        catchError(this.handleError)
-      );
+      map(this.jsonDataToResource.bind(this)),
+      catchError(this.handleError)
+    );
   }
 
   sendConfirmacao(id) {
@@ -53,7 +53,23 @@ export class InscritosService extends BaseResourceService<Inscritos> {
       map(this.jsonDataPagesToResources)
     );
   }
+
+  getByParameters(page: number,
+                  size: number,
+                  emailEnviado,
+  ){
+    const url = `${this.configService.getApiUrl()}${this.apiPath}/${page}/${size}/parameters`;
+    return this.http.get(url, {
+      params: {
+        emailEnviado
+      }
+    }).pipe(
+      catchError(this.handleError),
+      map(this.jsonDataPagesToResources)
+    );
+
+  }
+
+
+
 }
-
-
-

@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -6,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import {FileUploadModule} from 'primeng/fileupload';
 
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
+import { DropdownModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [BreadCrumbComponent],
@@ -13,11 +15,15 @@ import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.compon
     CommonModule,
     RouterModule,
     TableModule,
-    FileUploadModule
+    FileUploadModule,
+    DropdownModule,
+    FormsModule,
   ],
   exports: [BreadCrumbComponent,
     TableModule,
-    FileUploadModule
+    FileUploadModule,
+    DropdownModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

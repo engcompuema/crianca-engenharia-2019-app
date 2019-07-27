@@ -10,6 +10,14 @@
       <th class="col-md-2">Email enviado</th>
       <th class="col-md-2">Ações</th>
     </tr>
+    <tr class="d-flex" style="text-align: center">
+      <th class="col-md-3"></th>
+      <th class="col-md-2"></th>
+      <th class="col-md-3"></th>
+      <p-dropdown class="col-md-2" [(ngModel)]="filters.get('emailEnviado').filtro" [options]="emailEnviado" (onChange)="filtrar()">
+      </p-dropdown>
+      <th class="col-md-2"></th>
+    </tr>
   </ng-template>
   <ng-template pTemplate="body" let-inscrito>
     <tr class="d-flex" style="text-align: center">
@@ -17,9 +25,14 @@
       <td class="col-md-2">{{inscrito.cpf}}</td>
       <td class="col-md-3">{{inscrito.email}}</td>
       <td class="col-md-2">{{booleanToText(inscrito.emailEnviado)}}</td>
-      <td class="col-md-2"><button type="button" class="btn btn-primary btn-sm" (click)="confirmarEnvio(inscrito.id)"><i class="pi pi-envelope"></i>
+      <td class="col-md-2"><button type="button" class="btn btn-primary btn-sm" (click)="confirmarEnvio(inscrito.id)"><i
+            class="pi pi-envelope"></i>
         </button></td>
     </tr>
   </ng-template>
 </p-table>
+<br />
+<button type="button" class="btn btn-primary btn-lg mb-4" (click)="confirmarEnvioMassa()">Enviar Para Todos
+</button>
+<p-progressBar *ngIf="enviandoEmails" [value]="progressoEnvio"></p-progressBar>
 <br />
