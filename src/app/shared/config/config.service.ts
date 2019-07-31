@@ -4,11 +4,11 @@ export class ConfigService {
   }
 
   getAppUrl(): string {
-    return 'http://localhost:8080/';
+    return 'http://192.168.0.25:8080/crianca-engenharia';
   }
 
   getApiUrl(): string {
-    return 'http://localhost:8080/api/';
+    return 'http://192.168.0.25:8080/crianca-engenharia/api/';
   }
 
 }

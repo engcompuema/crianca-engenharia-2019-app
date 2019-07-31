@@ -35,12 +35,17 @@
             </div>
         </div>
     </div>
-    <button (click)="confirmarCheckin()" class="btn btn-lg btn-outline-success mt-2 float-right">Checkin</button>
+    <button [disabled]="frequenciaForm.invalid" (click)="confirmarCheckin()" class="btn btn-lg btn-outline-success mt-2 float-right">Checkin</button>
 </form>
 
 <br />
-<p-table [lazy]="true" (onLazyLoad)="loadInscritosLazy($event)" [totalRecords]="totalRecords"
+<p-table #dt [columns]="cols" [lazy]="true" (onLazyLoad)="loadInscritosLazy($event)" [totalRecords]="totalRecords"
     class="table stripped-table mb-2 mt-5" [value]="inscritos" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div class="ui-helper-clearfix">
+          <button type="button" pButton icon="pi pi-file" iconPos="left" label="Exportar Frequência" (click)="exportTable(dt)" style="float:left"></button>
+      </div>
+  </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr class="d-flex" style="text-align: center">
             <th class="col-md-4">Nome</th>

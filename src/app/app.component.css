@@ -99,6 +99,11 @@ a:focus {
     display: block;
 }
 
+.active {
+    color: #004e89;
+    background: #fff;
+}
+
 #sidebar ul li a:hover {
     color: #004e89;
     background: #fff;
@@ -107,7 +112,7 @@ a:focus {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #004e89;
 }
 
 a[data-toggle="collapse"] {
@@ -125,7 +130,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #004e89;
 }
 
 ul.CTAs {
@@ -144,10 +149,14 @@ a.download {
     background: #fff;
     color: #004e89;
 }
+a.active{
+    background: #fff !important;
+    color: #004e89 !important;
+}
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
+    background: #004e89 !important;
     color: #fff !important;
 }
 

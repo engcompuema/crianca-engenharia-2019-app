@@ -1,5 +1,5 @@
 import { ConfigService } from './../config/config.service';
-import { Injectable, Injector } from '@angular/core';
+import { Injector } from '@angular/core';
 import { BaseResourceModel } from '../models/base-resource-model.model';
 
 import { Observable, throwError } from 'rxjs';
@@ -9,9 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { Response } from '../../shared/models/response.model';
 import { Page } from '../models/page';
 
-@Injectable({
-  providedIn: 'root'
-})
 
 export abstract class BaseResourceService<T extends BaseResourceModel> {
 
